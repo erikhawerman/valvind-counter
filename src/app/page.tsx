@@ -8,18 +8,24 @@ const countVariants = {
   initial: { scale: 1 },
 };
 const milestoneVariants = {
-  visible: { opacity: 1, y: 100, transition: { duration: 0.1 }, scale: 2.0 },
+  visible: { opacity: 1, y: 100, transition: { duration: 0.1 }, scale: 3.0 },
   hidden: { opacity: 0, y: -50 },
 };
 const milestones = Array.from({ length: 100 }, (_, i) => (i + 1) * 1000);
+milestones.push(5);
 
 export default function HomePage() {
   const [count, setCount] = useState(0);
   const [animation, setAnimation] = useState("initial");
   const [milestone, setMilestone] = useState<number | null>(null);
   const [lastFetchedCount, setLastFetchedCount] = useState(0);
-  const width = window.innerWidth;
-  const height = window.innerHeight;
+  const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      setDimensions({ width: window.innerWidth, height: window.innerHeight });
+    }
+  }, []);
 
   useEffect(() => {
     if (!process.env.NEXT_PUBLIC_COUNT_API_URL) return;
@@ -60,11 +66,19 @@ export default function HomePage() {
     });
   }, [count, lastFetchedCount]);
 
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setAnimation("updated");
+      setCount((c) => c + 1);
+    }, 3000);
+    return () => clearInterval(intervalId);
+  }, []);
+
   return (
     <div className="flex h-screen w-screen flex-col items-center justify-center">
       {milestone && (
         <>
-          <Confetti width={width} height={height} />
+          <Confetti width={dimensions.width} height={dimensions.height} />
           <motion.span
             className="absolute top-10 rounded p-4 text-8xl font-bold text-yellow-400"
             variants={milestoneVariants}
