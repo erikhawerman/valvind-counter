@@ -12,14 +12,14 @@ const milestoneVariants = {
   hidden: { opacity: 0, y: -50 },
 };
 const milestones = Array.from({ length: 100 }, (_, i) => (i + 1) * 1000);
-const width = window.innerWidth;
-const height = window.innerHeight;
 
 export default function HomePage() {
   const [count, setCount] = useState(0);
   const [animation, setAnimation] = useState("initial");
   const [milestone, setMilestone] = useState<number | null>(null);
   const [lastFetchedCount, setLastFetchedCount] = useState(0);
+  const width = window.innerWidth;
+  const height = window.innerHeight;
 
   useEffect(() => {
     if (!process.env.NEXT_PUBLIC_COUNT_API_URL) return;
