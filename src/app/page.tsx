@@ -26,7 +26,7 @@ export default function HomePage() {
     };
 
     fetchCount();
-    const intervalId = setInterval(fetchCount, 2000);
+    const intervalId = setInterval(fetchCount, 10000);
 
     return () => {
       clearInterval(intervalId);
