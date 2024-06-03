@@ -12,7 +12,6 @@ const milestoneVariants = {
   hidden: { opacity: 0, y: -50 },
 };
 const milestones = Array.from({ length: 100 }, (_, i) => (i + 1) * 1000);
-milestones.push(5);
 
 export default function HomePage() {
   const [count, setCount] = useState(0);
@@ -44,7 +43,7 @@ export default function HomePage() {
     };
 
     fetchCount();
-    const intervalId = setInterval(fetchCount, 10000);
+    const intervalId = setInterval(fetchCount, 3000);
 
     return () => {
       clearInterval(intervalId);
@@ -60,19 +59,11 @@ export default function HomePage() {
   useEffect(() => {
     setLastFetchedCount(count);
     milestones.forEach((m) => {
-      if (count >= m && lastFetchedCount < m) {
+      if (count >= m && lastFetchedCount !== 0 && lastFetchedCount < m) {
         setMilestone(m);
       }
     });
   }, [count, lastFetchedCount]);
-
-  useEffect(() => {
-    const intervalId = setInterval(() => {
-      setAnimation("updated");
-      setCount((c) => c + 1);
-    }, 3000);
-    return () => clearInterval(intervalId);
-  }, []);
 
   return (
     <div className="flex h-screen w-screen flex-col items-center justify-center">
