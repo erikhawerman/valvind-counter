@@ -12,9 +12,15 @@ export default function HomePage() {
   const goal = 100; // Set your goal here, adjust according to your target
   const [animation, setAnimation] = useState("initial");
 
+  console.log(
+    "process.env.COUNT_API_URL",
+    process.env.NEXT_PUBLIC_COUNT_API_URL,
+  );
+
   useEffect(() => {
+    if (!process.env.NEXT_PUBLIC_COUNT_API_URL) return;
     const fetchCount = () => {
-      fetch(process.env.COUNT_API_URL!)
+      fetch(process.env.NEXT_PUBLIC_COUNT_API_URL!)
         .then((res) => res.json())
         .then((data: number) => {
           if (data > count) {
