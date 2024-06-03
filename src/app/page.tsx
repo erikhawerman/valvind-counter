@@ -9,7 +9,7 @@ const countVariants = {
 };
 export default function HomePage() {
   const [count, setCount] = useState(0);
-  const goal = 100; // Set your goal here, adjust according to your target
+  const goal = 100;
   const [animation, setAnimation] = useState("initial");
 
   console.log(
@@ -24,7 +24,7 @@ export default function HomePage() {
         .then((res) => res.json())
         .then((data: number) => {
           if (data > count) {
-            setAnimation("updated"); // Trigger the animation when the count increases
+            setAnimation("updated");
           }
           setCount(data);
         })
@@ -37,11 +37,11 @@ export default function HomePage() {
     return () => {
       clearInterval(intervalId);
     };
-  }, [count]); // Depend on count to decide when to trigger animation
+  }, [count]);
 
   useEffect(() => {
     if (animation === "updated") {
-      setTimeout(() => setAnimation("initial"), 300); // Reset animation state after it plays
+      setTimeout(() => setAnimation("initial"), 300);
     }
   }, [animation]);
 
