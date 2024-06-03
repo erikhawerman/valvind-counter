@@ -14,7 +14,7 @@ export default function HomePage() {
 
   useEffect(() => {
     const fetchCount = () => {
-      fetch("https://localhost:61949/api/interaction-counter?apiKey=abc123")
+      fetch(process.env.COUNT_API_URL!)
         .then((res) => res.json())
         .then((data: number) => {
           if (data > count) {
