@@ -89,7 +89,7 @@ export default function HomePage() {
         variants={countVariants}
         animate={animation}
       >
-        {count}
+        {count === 0 ? "..." : count}
       </motion.span>
     </div>
   );
