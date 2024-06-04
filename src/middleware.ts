@@ -1,17 +1,19 @@
 import { NextRequest, NextResponse } from "next/server";
 
 export function middleware(request: NextRequest) {
-  console.log("middleware");
-  console.log("request", request);
   const basicAuth = request.headers.get("authorization");
 
   if (basicAuth) {
-    const auth = basicAuth.split(" ")[1] ?? ""; // Add nullish coalescing operator to provide a default value
-    const [user, password] = Buffer.from(auth, "base64").toString().split(":");
+    const encodedCredentials = basicAuth.split(" ")[1] ?? "";
+    const decodedCredentials = Buffer.from(
+      encodedCredentials,
+      "base64",
+    ).toString();
+    const [username, password] = decodedCredentials.split(":");
 
     if (
-      user === process.env.BASIC_USER &&
-      password === process.env.BASIC_PASS
+      username === process.env.NEXT_PUBLIC_BASIC_USER &&
+      password === process.env.NEXT_PUBLIC_BASIC_PASS
     ) {
       return NextResponse.next();
     }
