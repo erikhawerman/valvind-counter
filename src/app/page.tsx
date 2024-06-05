@@ -43,7 +43,7 @@ export default function HomePage() {
     };
 
     fetchCount();
-    const intervalId = setInterval(fetchCount, 3000);
+    const intervalId = setInterval(fetchCount, 700);
 
     return () => {
       clearInterval(intervalId);
